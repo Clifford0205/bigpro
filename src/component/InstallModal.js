@@ -13,6 +13,15 @@ class InstallModal extends React.Component {
     super();
     this.state = {
       memberData: [],
+      m_name: '',
+      m_mobile: '',
+      m_birthday: '',
+      m_email: '',
+      m_password: '',
+      re_password: '',
+      installdb: 'none',
+      installtext: '註冊失敗',
+      installstate: 'alert alert-danger',
     };
   }
 
@@ -20,22 +29,33 @@ class InstallModal extends React.Component {
     document.getElementById('selectImage').click();
   };
 
-  handleDataSave = () => {
-     // 處理新增資料的儲存
-  
+  handleModalFormInputChange = event => {
+    let value = event.target.value;
+    const name = event.target.name;
 
+    // 注意：id(學號)與生日，需先轉為數字類型再進入state中
+    // if (name === 'phone' || name === 'birthday') value = +value;
+
+    this.setState({ [name]: value });
+
+    console.log({ [name]: value });
+  };
+
+  handleModalFormInputSave = async () => {
     const item = {
-      id: this.state.id,
-      name: this.state.name,
-      birth: this.state.birth,
+      m_name: this.state.m_name,
+      m_mobile: this.state.m_mobile,
+      m_birthday: this.state.m_birthday,
+      m_email: this.state.m_email,
+      m_password: this.state.m_password,
     };
 
-    const newData = [item, ...this.state.studentData];
+    const newData = [item, ...this.state.memberData];
 
     try {
       const data = item;
 
-      const response = await fetch('http://localhost:5555/students', {
+      const response = await fetch('http://localhost:5555/member', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: new Headers({
@@ -48,9 +68,23 @@ class InstallModal extends React.Component {
 
       console.log(jsonObject);
 
-      await this.setState({ studentData: newData }, () => {
-        alert('資料已成功新增!');
-        this.handleModalClose();
+      await this.setState({ memberData: newData }, () => {
+        // alert('資料已成功新增!');
+        // this.handleModalClose();
+        if (jsonObject.success) {
+          alert('註冊成功!');
+          this.setState({ installdb: 'block' });
+          this.setState({ installtext: '註冊成功' });
+          this.setState({ installstate: 'alert alert-success' });
+          return;
+        }
+
+        if (!jsonObject.success) {
+          this.setState({ installdb: 'block' });
+          alert('e-mail重複使用');
+
+          return;
+        }
       });
     } catch (e) {
       console.log(e);
@@ -62,9 +96,18 @@ class InstallModal extends React.Component {
       <>
         <Modal show={this.props.show} onHide={this.props.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>會員註冊</Modal.Title>
+            <Modal.Title className="mx-auto">會員註冊</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <div
+              id="info_bar"
+              className={this.state.installstate}
+              style={{ display: `${this.state.installdb}` }}
+              role="alert"
+              // style={{"display:"}}
+            >
+              {this.state.installtext}
+            </div>
             <Row>
               <Col>
                 <InputGroup className="mb-3">
@@ -74,13 +117,9 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="id"
-                    disabled={this.props.disableIdField}
-                    value={
-                      /* 因為this.props預設為0，不要該數字0出現，應該是出現空白字串 */
-                      this.props.id ? this.props.id : ''
-                    }
-                    onChange={this.props.handleModalFormInputChange}
+                    name="m_name"
+                    value={this.state.name}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -92,9 +131,10 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="name"
-                    value={this.props.name}
-                    onChange={this.props.handleModalFormInputChange}
+                    name="m_mobile"
+                    type="number"
+                    value={this.state.phone}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -106,9 +146,10 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="name"
-                    value={this.props.name}
-                    onChange={this.props.handleModalFormInputChange}
+                    name="m_birthday"
+                    type="date"
+                    value={this.state.birthday}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -120,9 +161,9 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="name"
-                    value={this.props.name}
-                    onChange={this.props.handleModalFormInputChange}
+                    name="m_email"
+                    value={this.state.email}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -135,10 +176,10 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="name"
+                    name="m_password"
                     type="password"
-                    value={this.props.name}
-                    onChange={this.props.handleModalFormInputChange}
+                    value={this.state.password}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -150,10 +191,10 @@ class InstallModal extends React.Component {
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
-                    name="name"
+                    name="re_password"
                     type="password"
-                    value={this.props.name}
-                    onChange={this.props.handleModalFormInputChange}
+                    value={this.state.re_password}
+                    onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
                 <br />
@@ -185,7 +226,10 @@ class InstallModal extends React.Component {
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary m-auto" onClick={this.props.handleClose}>
+            <Button
+              variant="secondary m-auto"
+              onClick={this.handleModalFormInputSave}
+            >
               立即註冊
             </Button>
           </Modal.Footer>
