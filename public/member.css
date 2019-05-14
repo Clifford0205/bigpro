@@ -1,0 +1,19 @@
+.modal-dialog {
+  max-width: 80%;
+}
+
+.modal-content {
+  width: 100%;
+}
+
+#myimg {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: block;
+}
+
+#installCheck {
+  flex: none;
+}
