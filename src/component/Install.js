@@ -7,13 +7,13 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
-import InstallModal from './InstallModal';
+import InstallModal2 from './InstallModal2';
 
 class Install extends React.Component {
   render() {
     return (
       <>
-        <InstallModal show={true} />
+        <InstallModal2 show={true} />
         <Navbar bg="light" expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

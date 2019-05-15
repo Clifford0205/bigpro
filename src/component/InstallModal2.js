@@ -7,9 +7,11 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
+
+import './member.scss';
 import './member.css';
 
-class InstallModal extends React.Component {
+class InstallModal2 extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -122,8 +124,12 @@ class InstallModal extends React.Component {
 
   render() {
     return (
-      <>
-        <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <div>
+        <Modal
+          show={this.props.show}
+          onHide={this.props.handleClose}
+          className="member_ins"
+        >
           <Modal.Header closeButton>
             <Modal.Title className="mx-auto">會員註冊</Modal.Title>
           </Modal.Header>
@@ -272,9 +278,9 @@ class InstallModal extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
+      </div>
     );
   }
 }
 
-export default InstallModal;
+export default InstallModal2;

@@ -1,9 +1,12 @@
 .modal-dialog {
-  max-width: 80%;
+  max-width: 10% ;
+  
 }
 
 .modal-content {
   width: 100%;
+  background-color: #fff;
+  /* background:#fff url("https://images2.imgbox.com/92/7d/4YJWMBvc_o.png") no-repeat; */
 }
 
 .imgarea {
