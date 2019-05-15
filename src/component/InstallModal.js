@@ -7,6 +7,7 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
+import './member.css';
 
 class InstallModal extends React.Component {
   constructor() {
@@ -40,6 +41,24 @@ class InstallModal extends React.Component {
 
     console.log({ [name]: value });
   };
+
+  handlepicChange = e => {
+    // console.log(e.target.files[0]);
+    console.log(this.input.files[0]);
+    this.fileInfo(e.target.files[0]);
+  };
+
+  fileInfo(theFile) {
+    var reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    reader.addEventListener('loadend', function(event) {
+      //console.log(event.target.result);
+      //<img src="" class="" />
+      var photo = document.querySelector('.thumb');
+      photo.setAttribute('src', event.target.result);
+      // console.log(event.target.result);
+    });
+  }
 
   handleModalFormInputSave = async () => {
     const item = {
@@ -200,15 +219,19 @@ class InstallModal extends React.Component {
                 <br />
 
                 <InputGroup className="mb-3 d-block text-center">
-                  <img src="" alt="" id="myimg" className="m-auto" />
+                  <div className="imgarea mx-auto">
+                    <img className="thumb" src="" />
+                  </div>
                   <Button variant="secondary mt-3" onClick={this.upload}>
                     上傳圖片
                   </Button>
                   <div>
                     <input
                       type="file"
+                      onChange={this.handlepicChange}
                       className="m-auto d-none"
                       id="selectImage"
+                      ref={el => (this.input = el)}
                     />
                   </div>
                 </InputGroup>
