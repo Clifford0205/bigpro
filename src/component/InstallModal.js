@@ -46,7 +46,7 @@ class InstallModal extends React.Component {
 
   handlepicChange = e => {
     // console.log(e.target.files[0]);
-    console.log(this.input.files[0]);
+    console.log(e.target.files[0]);
     this.fileInfo(e.target.files[0]);
     this.setState({ m_photo: e.target.files[0] });
   };

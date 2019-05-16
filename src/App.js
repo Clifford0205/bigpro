@@ -10,6 +10,10 @@ import {
 import edit from './page/edit';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <>
@@ -18,7 +22,8 @@ class App extends React.Component {
         <Router>
           <>
             <Switch>
-              <Route exact path="/member" component={edit} />
+              <Route path="/member/:id" component={edit} />
+              <Route path="/member" component={edit} />
             </Switch>
           </>
         </Router>
