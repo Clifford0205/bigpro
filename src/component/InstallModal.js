@@ -7,7 +7,8 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
-import './member.css';
+// import './member.css';
+import './member.scss';
 
 class InstallModal extends React.Component {
   constructor() {
@@ -123,7 +124,11 @@ class InstallModal extends React.Component {
   render() {
     return (
       <>
-        <Modal show={this.props.show} onHide={this.props.handleClose}>
+        <Modal
+          show={this.props.show}
+          onHide={this.props.close}
+          className="member_ins"
+        >
           <Modal.Header closeButton>
             <Modal.Title className="mx-auto">會員註冊</Modal.Title>
           </Modal.Header>

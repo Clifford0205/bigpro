@@ -1,0 +1,25 @@
+.member_edit {
+  font-family: Noto Sans CJK TC;
+
+  .myPhoto {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-top: 100px;
+  }
+
+  .userName {
+    margin-top: 16px;
+    font-weight: bold;
+  }
+  ul {
+    margin-top: 110px;
+    li {
+      margin-bottom: 63px;
+      a {
+        color: black;
+      }
+    }
+  }
+}
