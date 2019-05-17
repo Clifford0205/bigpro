@@ -36,9 +36,6 @@ class InstallModal extends React.Component {
     let value = event.target.value;
     const name = event.target.name;
 
-    // 注意：id(學號)與生日，需先轉為數字類型再進入state中
-    // if (name === 'phone' || name === 'birthday') value = +value;
-
     this.setState({ [name]: value });
 
     console.log({ [name]: value });
