@@ -8,6 +8,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 import edit from './page/edit';
+import password from './page/password';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class App extends React.Component {
           <>
             <Switch>
               <Route path="/member/:id" component={edit} />
+              <Route path="/password/:id" component={password} />
               <Route path="/member" component={edit} />
             </Switch>
           </>

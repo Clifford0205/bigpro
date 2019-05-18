@@ -78,6 +78,7 @@ class InstallModal extends React.Component {
     formData.append('m_email', this.state.m_email);
     formData.append('m_password', this.state.m_password);
     formData.append('avatar', this.state.m_photo);
+
     console.log(formData);
     try {
       // const data = item;

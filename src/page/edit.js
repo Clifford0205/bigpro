@@ -134,7 +134,7 @@ class edit extends React.Component {
     formData.append('m_city', this.state.m_city);
     formData.append('m_town', this.state.m_town);
     formData.append('m_address', this.state.m_address);
-    // formData.append('avatar', this.state.new_photo);
+    formData.append('avatar', this.state.new_photo);
     console.log(formData);
 
     try {
@@ -157,11 +157,13 @@ class edit extends React.Component {
       await this.setState({ memberData: newData }, () => {
         // alert('資料已成功新增!');
         // this.handleModalClose();
-        if (jsonObject.success) {
-          alert('修改成功!');
+
+        if (jsonObject.message.info == '圖片檔案格式不符') {
           this.setState({ installdb: 'block' });
+          this.setState({ installstate: 'alert alert-warning' });
           this.setState({ installtext: jsonObject.message.text });
-          this.setState({ installstate: `alert alert-success` });
+          alert('資料沒有修改');
+
           return;
         }
 
@@ -171,6 +173,14 @@ class edit extends React.Component {
           this.setState({ installtext: '資料沒有修改' });
           alert('資料沒有修改');
 
+          return;
+        }
+
+        if (jsonObject.success) {
+          alert('修改成功!');
+          this.setState({ installdb: 'block' });
+          this.setState({ installtext: jsonObject.message.text });
+          this.setState({ installstate: `alert alert-success` });
           return;
         }
       });
@@ -189,11 +199,19 @@ class edit extends React.Component {
                 <img src={this.state.m_photo} className="originPhoto" />
               </div>
 
-              <div className="userName">我的名字</div>
+              <div className="userName">{this.state.m_name}</div>
 
               <ul className="list-unstyled">
                 <li>
                   <Link>編輯會員資料</Link>
+                  <ul className="list-unstyled">
+                    <li>
+                      <Link>個人檔案</Link>
+                    </li>
+                    <li>
+                      <Link>密碼</Link>
+                    </li>
+                  </ul>
                 </li>
 
                 <li>
