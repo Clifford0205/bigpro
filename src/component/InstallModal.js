@@ -8,7 +8,7 @@ import {
   Col,
 } from 'react-bootstrap';
 // import './member.css';
-import './member.scss';
+import './InstallModal.scss';
 
 class InstallModal extends React.Component {
   constructor() {

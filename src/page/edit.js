@@ -19,7 +19,7 @@ class edit extends React.Component {
     super(props);
     this.state = {
       myMemberData: [{}],
-
+      memberData: [],
       m_name: '',
       m_mobile: '',
       m_email: '',
@@ -28,6 +28,10 @@ class edit extends React.Component {
       m_town: '',
       m_address: '',
       m_photo: '',
+      new_photo: '',
+      installdb: 'none',
+      installtext: '註冊失敗',
+      installstate: 'alert alert-danger',
     };
     this.newMyemberData = {};
   }
@@ -74,7 +78,11 @@ class edit extends React.Component {
     let value = event.target.value;
     const name = event.target.name;
 
-    this.setState({ [name]: value }, () => console.log(this.state));
+    this.setState({ myMemberData: [{ [name]: value }] }, () =>
+      console.log(this.state)
+    );
+
+    this.setState({ [name]: value });
     // this.newMyemberData[name] = value;
     // console.log('newMyemberData');
     // console.log(this.newMyemberData);
@@ -103,6 +111,72 @@ class edit extends React.Component {
     this.setState({ m_city: data.county });
     this.setState({ m_town: data.district });
     console.log(this.state);
+  };
+
+  handleModalFormInputeditChecked = async () => {
+    const item = {
+      m_name: this.state.m_name,
+      m_mobile: this.state.m_mobile,
+      m_birthday: this.state.m_birthday,
+      m_email: this.state.m_email,
+      m_city: this.state.m_city,
+      m_town: this.state.m_town,
+      m_address: this.state.m_address,
+    };
+    console.log(item);
+    const newData = [item, ...this.state.memberData];
+
+    var formData = new FormData();
+    formData.append('m_name', this.state.m_name);
+    formData.append('m_mobile', this.state.m_mobile);
+    formData.append('m_birthday', this.state.m_birthday);
+    formData.append('m_email', this.state.m_email);
+    formData.append('m_city', this.state.m_city);
+    formData.append('m_town', this.state.m_town);
+    formData.append('m_address', this.state.m_address);
+    // formData.append('avatar', this.state.new_photo);
+    console.log(formData);
+
+    try {
+      // const data = item;
+      let id = this.props.match.params.id;
+      console.log(id);
+      const response = await fetch(`http://localhost:5555/member/${id}`, {
+        method: 'PUT',
+        body: formData,
+        // headers: new Headers({
+        //   Accept: 'application/json',
+        //   'Content-Type': 'application/json',
+        // }),
+      });
+
+      const jsonObject = await response.json();
+
+      console.log(jsonObject);
+
+      await this.setState({ memberData: newData }, () => {
+        // alert('資料已成功新增!');
+        // this.handleModalClose();
+        if (jsonObject.success) {
+          alert('修改成功!');
+          this.setState({ installdb: 'block' });
+          this.setState({ installtext: jsonObject.message.text });
+          this.setState({ installstate: `alert alert-success` });
+          return;
+        }
+
+        if (jsonObject.message.text == '資料沒有修改') {
+          this.setState({ installdb: 'block' });
+          this.setState({ installstate: 'alert alert-warning' });
+          this.setState({ installtext: '資料沒有修改' });
+          alert('資料沒有修改');
+
+          return;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {
@@ -146,6 +220,15 @@ class edit extends React.Component {
                   <h4 className="p-1">我的個人檔案</h4>
                 </div>
 
+                <div
+                  id="info_bar"
+                  className={this.state.installstate}
+                  style={{ display: `${this.state.installdb}` }}
+                  role="alert"
+                  // style={{"display:"}}
+                >
+                  {this.state.installtext}
+                </div>
                 <div className="d-flex">
                   <ul className="list-unstyled textpart flex-grow-1">
                     <li>
@@ -181,7 +264,7 @@ class edit extends React.Component {
                       <input
                         type="date"
                         value={this.state.m_birthday}
-                        name="m_mobile"
+                        name="m_birthday"
                         onChange={this.handleFormInputChange}
                       />
                     </li>
@@ -232,7 +315,14 @@ class edit extends React.Component {
 
                   <div className="flex-grow-1 text-center">
                     <div className="myPhoto mx-auto">
-                      <img src="" className="thumb2" />
+                      <img
+                        src={
+                          this.state.new_photo
+                            ? this.state.new_photo
+                            : this.state.m_photo
+                        }
+                        className="thumb2"
+                      />
                     </div>
 
                     <Button variant="secondary mt-5" onClick={this.upload}>
@@ -255,7 +345,7 @@ class edit extends React.Component {
                 <div className="text-center">
                   <Button
                     variant="secondary m-auto"
-                    onClick={this.handleModalFormInputSave}
+                    onClick={this.handleModalFormInputeditChecked}
                   >
                     修改資料
                   </Button>
