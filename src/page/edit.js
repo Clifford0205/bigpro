@@ -32,6 +32,7 @@ class edit extends React.Component {
       installdb: 'none',
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
+      id: '',
     };
     this.newMyemberData = {};
   }
@@ -140,6 +141,7 @@ class edit extends React.Component {
     try {
       // const data = item;
       let id = this.props.match.params.id;
+      this.setState(this.state.id);
       console.log(id);
       const response = await fetch(`http://localhost:5555/member/${id}`, {
         method: 'PUT',
@@ -209,7 +211,7 @@ class edit extends React.Component {
                       <Link>個人檔案</Link>
                     </li>
                     <li>
-                      <Link>密碼</Link>
+                      <Link to="/password/{this.state.id}">密碼</Link>
                     </li>
                   </ul>
                 </li>

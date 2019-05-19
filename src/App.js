@@ -9,6 +9,10 @@ import {
 } from 'react-router-dom';
 import edit from './page/edit';
 import password from './page/password';
+import product from './page/product';
+import news from './page/news';
+import course from './page/course';
+import road from './page/road';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +29,10 @@ class App extends React.Component {
             <Switch>
               <Route path="/member/:id" component={edit} />
               <Route path="/password/:id" component={password} />
-              <Route path="/member" component={edit} />
+              <Route path="/product/:id" component={product} />
+              <Route path="/course/:id" component={course} />
+              <Route path="/news/:id" component={news} />
+              <Route path="/road/:id" component={road} />
             </Switch>
           </>
         </Router>

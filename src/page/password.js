@@ -29,7 +29,6 @@ class password extends React.Component {
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
     };
-    this.newMyemberData = {};
   }
 
   async componentDidMount() {
@@ -73,12 +72,6 @@ class password extends React.Component {
     // this.newMyemberData[name] = value;
     // console.log('newMyemberData');
     // console.log(this.newMyemberData);
-  };
-
-  handleChange = data => {
-    this.setState({ m_city: data.county });
-    this.setState({ m_town: data.district });
-    console.log(this.state);
   };
 
   handleModalFormInputeditChecked = async () => {
