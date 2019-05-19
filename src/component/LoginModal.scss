@@ -1,21 +1,19 @@
-.member_ins {
+.member_Login {
     font-family: Noto Sans CJK TC;
 
-    input {
-        border-radius: unset;
-        height: auto;
-        padding: 0;
-    }
-
     .modal-dialog {
-        max-width: 80%;
+        max-width: 40%;
+
+        .modal-content {
+            width: 100%;
+            background-color: #fff;
+            /* background:#fff url("https://images2.imgbox.com/92/7d/4YJWMBvc_o.png") no-repeat; */
+            
+
+        }
     }
 
-    .modal-content {
-        width: 100%;
-        background-color: #fff;
-        /* background:#fff url("https://images2.imgbox.com/92/7d/4YJWMBvc_o.png") no-repeat; */
-    }
+
 
     .imgarea {
         width: 150px;

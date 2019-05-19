@@ -144,11 +144,8 @@ class InstallModal extends React.Component {
               <Col />
               <Col>
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      姓名
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>姓名:</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_name"
                     value={this.state.name}
@@ -158,11 +155,8 @@ class InstallModal extends React.Component {
                 <br />
 
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      手機號碼
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>手機號碼:</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_mobile"
                     type="number"
@@ -173,11 +167,8 @@ class InstallModal extends React.Component {
                 <br />
 
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      生日
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>生日:</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_birthday"
                     type="date"
@@ -188,11 +179,8 @@ class InstallModal extends React.Component {
                 <br />
 
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      E-mail(帳號)
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>E-mail(帳號):</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_email"
                     value={this.state.email}
@@ -203,11 +191,8 @@ class InstallModal extends React.Component {
               </Col>
               <Col>
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      密碼
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>密碼:</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_password"
                     type="password"
@@ -218,11 +203,8 @@ class InstallModal extends React.Component {
                 <br />
 
                 <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      確認密碼
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  <InputGroup.Prepend>確認密碼:</InputGroup.Prepend>
+                  <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="re_password"
                     type="password"
