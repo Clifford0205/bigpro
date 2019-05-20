@@ -21,7 +21,7 @@ class InstallModal extends React.Component {
       m_email: '',
       m_password: '',
       re_password: '',
-      m_photo: '',
+      m_photo: 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png',
       installdb: 'none',
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
@@ -77,8 +77,9 @@ class InstallModal extends React.Component {
     formData.append('m_birthday', this.state.m_birthday);
     formData.append('m_email', this.state.m_email);
     formData.append('m_password', this.state.m_password);
-    formData.append('avatar', this.state.m_photo);
-
+    this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
+      ? formData.append('m_photo', this.state.m_photo)
+      : formData.append('avatar', this.state.m_photo);
     console.log(formData);
     try {
       // const data = item;
@@ -128,7 +129,7 @@ class InstallModal extends React.Component {
           className="member_ins"
         >
           <Modal.Header closeButton>
-            <Modal.Title className="mx-auto">會員註冊</Modal.Title>
+            <Modal.Title className="mx-auto">註冊會員</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div
@@ -140,10 +141,10 @@ class InstallModal extends React.Component {
             >
               {this.state.installtext}
             </div>
-            <Row>
-              <Col />
-              <Col>
-                <InputGroup className="mb-3">
+            <Row className="formarea">
+              <Col md={2} />
+              <Col md={4}>
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>姓名:</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -152,9 +153,8 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
 
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>手機號碼:</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -164,9 +164,8 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
 
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>生日:</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -176,9 +175,8 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
 
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>E-mail(帳號):</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -187,10 +185,9 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
               </Col>
-              <Col>
-                <InputGroup className="mb-3">
+              <Col md={4}>
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>密碼:</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -200,9 +197,8 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
 
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>確認密碼:</InputGroup.Prepend>
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
@@ -212,9 +208,8 @@ class InstallModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                 </InputGroup>
-                <br />
 
-                <InputGroup className="mb-3 d-block text-center">
+                <InputGroup className="mb-md-3 d-block text-center">
                   <div className="imgarea mx-auto">
                     <img className="thumb" src="" />
                   </div>
@@ -232,8 +227,8 @@ class InstallModal extends React.Component {
                     />
                   </div>
                 </InputGroup>
-                <br />
               </Col>
+              <Col md={2} />
             </Row>
 
             <Row>

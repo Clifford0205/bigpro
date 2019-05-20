@@ -1,46 +1,76 @@
+@mixin md {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 .member_ins {
-    font-family: Noto Sans CJK TC;
+  font-family: Noto Sans CJK TC;
 
-    input {
-        border-radius: unset;
-        height: auto;
-        padding: 0;
+  input {
+    border-radius: unset;
+    height: auto;
+    padding: 0;
+  }
+
+  .modal-dialog {
+    max-width: 70%;
+  }
+
+  .modal-content {
+    width: 100%;
+    background-color: #fff;
+    background: #fff url('https://images2.imgbox.com/e1/48/14vgdJJW_o.png')
+      no-repeat;
+    border-radius: unset;
+    background-position: -40px -30px;
+    height: 800px;
+    @include md {
+       box-sizing: unset;
+       padding-bottom:40px; 
+      }
+    .modal-header {
+      border-bottom: none;
+    }
+    .modal-footer {
+      border-top: none;
     }
 
-    .modal-dialog {
-        max-width: 80%;
+    .formarea {
+      margin-top: 40px;
+      input {
+        margin-bottom: 70px;
+        @include md {
+          margin-bottom: 40px;
+        }
+      }
     }
+  }
 
-    .modal-content {
-        width: 100%;
-        background-color: #fff;
-        /* background:#fff url("https://images2.imgbox.com/92/7d/4YJWMBvc_o.png") no-repeat; */
-    }
+  .imgarea {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: block;
+    overflow: hidden;
+  }
 
-    .imgarea {
-        width: 150px;
-        height: 150px;
-        border: 1px solid black;
-        border-radius: 50%;
-        display: block;
-        overflow: hidden;
-    }
+  #installCheck {
+    flex: none;
+  }
 
-    #installCheck {
-        flex: none;
-    }
+  .modal-header .close {
+    margin-left: 0;
+  }
 
-    .modal-header .close {
-        margin-left: 0;
-    }
+  #info_bar {
+    text-align: center;
+  }
 
-    #info_bar {
-        text-align: center;
-    }
-
-    .thumb {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+  .thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }

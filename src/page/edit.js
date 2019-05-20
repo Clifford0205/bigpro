@@ -18,9 +18,10 @@ class edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myMemberData: [{}],
+      myMemberData: [],
       memberData: [],
       m_name: '',
+      m_oldname: '',
       m_mobile: '',
       m_email: '',
       m_birthday: '',
@@ -57,6 +58,7 @@ class edit extends React.Component {
       await this.setState({
         myMemberData: jsonObject,
         m_name: jsonObject[0].m_name,
+        m_oldname: jsonObject[0].m_name,
         m_mobile: jsonObject[0].m_mobile,
         m_email: jsonObject[0].m_email,
         m_birthday: jsonObject[0].m_birthday2,
@@ -123,8 +125,10 @@ class edit extends React.Component {
       m_city: this.state.m_city,
       m_town: this.state.m_town,
       m_address: this.state.m_address,
+      m_photo: this.state.m_photo,
     };
     console.log(item);
+    const none = [];
     const newData = [item, ...this.state.memberData];
 
     var formData = new FormData();
@@ -135,13 +139,15 @@ class edit extends React.Component {
     formData.append('m_city', this.state.m_city);
     formData.append('m_town', this.state.m_town);
     formData.append('m_address', this.state.m_address);
-    formData.append('avatar', this.state.new_photo);
+    // formData.append('avatar', this.state.new_photo);
+    this.state.new_photo == ''
+      ? formData.append('m_photo', this.state.m_photo)
+      : formData.append('avatar', this.state.new_photo);
     console.log(formData);
 
     try {
       // const data = item;
       let id = this.props.match.params.id;
-      this.setState(this.state.id);
       console.log(id);
       const response = await fetch(`http://localhost:5555/member/${id}`, {
         method: 'PUT',
@@ -154,38 +160,41 @@ class edit extends React.Component {
 
       const jsonObject = await response.json();
 
-      console.log(jsonObject);
+      console.log('PUT', jsonObject.body);
 
-      await this.setState({ memberData: newData }, () => {
-        // alert('資料已成功新增!');
-        // this.handleModalClose();
+      await this.setState(
+        { memberData: [jsonObject.body], m_oldname: jsonObject.body.m_name },
+        () => {
+          // alert('資料已成功新增!');
+          // this.handleModalClose();
 
-        if (jsonObject.message.info == '圖片檔案格式不符') {
-          this.setState({ installdb: 'block' });
-          this.setState({ installstate: 'alert alert-warning' });
-          this.setState({ installtext: jsonObject.message.text });
-          alert('資料沒有修改');
+          if (jsonObject.message.info == '圖片檔案格式不符') {
+            this.setState({ installdb: 'block' });
+            this.setState({ installstate: 'alert alert-warning' });
+            this.setState({ installtext: jsonObject.message.text });
+            alert('資料沒有修改');
 
-          return;
+            return;
+          }
+
+          if (jsonObject.message.text == '資料沒有修改') {
+            this.setState({ installdb: 'block' });
+            this.setState({ installstate: 'alert alert-warning' });
+            this.setState({ installtext: '資料沒有修改' });
+            alert('資料沒有修改');
+
+            return;
+          }
+
+          if (jsonObject.success) {
+            alert('修改成功!');
+            this.setState({ installdb: 'block' });
+            this.setState({ installtext: jsonObject.message.text });
+            this.setState({ installstate: `alert alert-success` });
+            return;
+          }
         }
-
-        if (jsonObject.message.text == '資料沒有修改') {
-          this.setState({ installdb: 'block' });
-          this.setState({ installstate: 'alert alert-warning' });
-          this.setState({ installtext: '資料沒有修改' });
-          alert('資料沒有修改');
-
-          return;
-        }
-
-        if (jsonObject.success) {
-          alert('修改成功!');
-          this.setState({ installdb: 'block' });
-          this.setState({ installtext: jsonObject.message.text });
-          this.setState({ installstate: `alert alert-success` });
-          return;
-        }
-      });
+      );
     } catch (e) {
       console.log(e);
     }
@@ -201,7 +210,7 @@ class edit extends React.Component {
                 <img src={this.state.m_photo} className="originPhoto" />
               </div>
 
-              <div className="userName">{this.state.m_name}</div>
+              <div className="userName">{this.state.m_oldname}</div>
 
               <ul className="list-unstyled">
                 <li>
