@@ -21,7 +21,7 @@ class InstallModal extends React.Component {
       m_email: '',
       m_password: '',
       re_password: '',
-      m_photo: 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png',
+      m_photo: '',
       installdb: 'none',
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
@@ -46,6 +46,7 @@ class InstallModal extends React.Component {
     console.log(e.target.files[0]);
     this.fileInfo(e.target.files[0]);
     this.setState({ m_photo: e.target.files[0] });
+    console.log(this.state.m_photo);
   };
 
   fileInfo(theFile) {
@@ -67,6 +68,7 @@ class InstallModal extends React.Component {
       m_birthday: this.state.m_birthday,
       m_email: this.state.m_email,
       m_password: this.state.m_password,
+      m_photo: this.state.m_photo,
     };
     console.log(item);
     const newData = [item, ...this.state.memberData];
@@ -77,9 +79,10 @@ class InstallModal extends React.Component {
     formData.append('m_birthday', this.state.m_birthday);
     formData.append('m_email', this.state.m_email);
     formData.append('m_password', this.state.m_password);
-    this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
-      ? formData.append('m_photo', this.state.m_photo)
-      : formData.append('avatar', this.state.m_photo);
+    formData.append('avatar', this.state.m_photo);
+    // this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
+    //   ? formData.append('m_photo', this.state.m_photo)
+    //   : formData.append('avatar', this.state.m_photo);
     console.log(formData);
     try {
       // const data = item;

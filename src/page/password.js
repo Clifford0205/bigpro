@@ -11,6 +11,7 @@ import {
   Col,
 } from 'react-bootstrap';
 // import PathNow from '../component/PathNow';
+import Sidebar from '../component/Sidebar';
 import './edit.scss';
 
 class password extends React.Component {
@@ -35,6 +36,7 @@ class password extends React.Component {
     try {
       let id = this.props.match.params.id;
       console.log(id);
+      this.setState({ id: id });
       const response = await fetch(`http://localhost:5555/member/${id}`, {
         method: 'GET',
         headers: new Headers({
@@ -163,43 +165,11 @@ class password extends React.Component {
       <>
         <Container className="member_edit">
           <Row>
-            <Col sm={4} className="sidebar">
-              <div className="myPhoto">
-                <img src={this.state.m_photo} className="originPhoto" />
-              </div>
-
-              <div className="userName">{this.state.m_name}</div>
-
-              <ul className="list-unstyled">
-                <li>
-                  <Link>編輯會員資料</Link>
-                  <ul className="list-unstyled">
-                    <li>
-                      <Link>個人檔案</Link>
-                    </li>
-                    <li>
-                      <Link>密碼</Link>
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <Link>路線列表</Link>
-                </li>
-
-                <li>
-                  <Link>收藏文章</Link>
-                </li>
-
-                <li>
-                  <Link>我的課程</Link>
-                </li>
-
-                <li>
-                  <Link>商品管理</Link>
-                </li>
-              </ul>
-            </Col>
+            <Sidebar
+              src={this.state.m_photo}
+              name={this.state.m_name}
+              myId={this.state.id}
+            />
 
             <Col sm={8}>
               <div className="myProfile">
