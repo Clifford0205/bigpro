@@ -70,23 +70,29 @@ class DetailNav extends React.Component {
       <>
         <Nav justify variant="tabs" defaultActiveKey="/home">
           <Nav.Item>
-            <Nav.Link eventKey="link-1" onClick={this.props.handleTitleClick}>
+            <a
+              href="javascipt:;"
+              eventKey="link-1"
+              onClick={this.props.handleTitleClick}
+              className="nav-link"
+              id="box1"
+            >
               {this.props.title1}
-            </Nav.Link>
+            </a>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-2" onClick={this.props.handleTitleClick}>
-              {this.props.title2}
+              <div id="box2">{this.props.title2}</div>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-3" onClick={this.props.handleTitleClick}>
-              {this.props.title3}
+              <div id="box3">{this.props.title3}</div>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-4" onClick={this.props.handleTitleClick}>
-              {this.props.title4}
+              <div id="box4">{this.props.title4}</div>
             </Nav.Link>
           </Nav.Item>
         </Nav>

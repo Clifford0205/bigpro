@@ -14,7 +14,7 @@ import {
 // import PathNow from '../component/PathNow';
 import Sidebar from '../component/Sidebar';
 import DetailNav from '../component/DetailNav';
-import './edit.scss';
+import './road.scss';
 import { NONAME } from 'dns';
 
 class road extends React.Component {
@@ -60,15 +60,25 @@ class road extends React.Component {
     }
   }
 
-  handleTitleClick = () => {
+  handleTitleClick = e => {
     this.setState({ nowPage: true });
-    document.querySelector('.dataArea1').classList.add('show');
+    console.log(e.target.id);
+    let Allbox = document.querySelectorAll('.Allbox');
+    for (var i = 0; i < Allbox.length; i++) {
+      Allbox[i].classList.remove('show');
+    }
+    document.querySelector(`.${e.target.id}`).classList.add('show');
+    // e.target.classList.add('show');
   };
 
   render() {
+    // {
+    //   document.querySelectorAll('.nav-link');
+    //   console.log(document.querySelectorAll('.nav-link')[0].dataset);
+    // }
     return (
       <>
-        <Container className="member_edit">
+        <Container className="member_road">
           <Row>
             <Sidebar
               src={this.state.m_photo}
@@ -85,11 +95,13 @@ class road extends React.Component {
                 handleTitleClick={this.handleTitleClick}
               />
 
-              <div className="dataArea1" style={{ display: this.state.dbType }}>
-                123456
-              </div>
+              <div className="box1 Allbox">123456</div>
 
-              <div className="dataArea1">987654321</div>
+              <div className="box2 Allbox">987654321</div>
+
+              <div className="box3 Allbox">872222</div>
+
+              <div className="box4 Allbox">258768</div>
             </Col>
           </Row>
         </Container>
