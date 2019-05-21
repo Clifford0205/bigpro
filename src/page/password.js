@@ -171,7 +171,7 @@ class password extends React.Component {
               myId={this.state.id}
             />
 
-            <Col sm={8}>
+            <Col>
               <div className="myProfile">
                 <div className="member-title">
                   <h4 className="p-1">更改密碼</h4>

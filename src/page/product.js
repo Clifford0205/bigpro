@@ -36,6 +36,7 @@ class product extends React.Component {
     try {
       let id = this.props.match.params.id;
       console.log(id);
+      this.setState({ id: id });
       const response = await fetch(`http://localhost:5555/member/${id}`, {
         method: 'GET',
         headers: new Headers({
@@ -80,7 +81,11 @@ class product extends React.Component {
       <>
         <Container className="member_edit">
           <Row>
-            <Sidebar src={this.state.m_photo} name={this.state.m_name} />
+            <Sidebar
+              src={this.state.m_photo}
+              name={this.state.m_name}
+              myId={this.state.id}
+            />
           </Row>
         </Container>
       </>

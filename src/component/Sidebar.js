@@ -68,7 +68,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Col sm={4} className="member-sidebar">
+        <Col sm={3} className="member-sidebar">
           <div className="myPhoto">
             <img src={this.props.src} className="originPhoto" />
           </div>
@@ -77,31 +77,31 @@ class Sidebar extends React.Component {
 
           <ul className="list-unstyled">
             <li>
-              <Link>編輯會員資料</Link>
+              <Link to={`/member/edit/${this.props.myId}`}>編輯會員資料</Link>
               <ul className="list-unstyled">
                 <li>
-                  <Link to={`/member/${this.props.myId}`}>個人檔案</Link>
+                  <Link to={`/member/edit/${this.props.myId}`}>個人檔案</Link>
                 </li>
                 <li>
-                  <Link to={`/password/${this.props.myId}`}>密碼</Link>
+                  <Link to={`/member/password/${this.props.myId}`}>密碼</Link>
                 </li>
               </ul>
             </li>
 
             <li>
-              <Link>路線列表</Link>
+              <Link to={`/member/road/${this.props.myId}`}>路線列表</Link>
             </li>
 
             <li>
-              <Link>收藏文章</Link>
+              <Link to={`/member/news/${this.props.myId}`}>收藏文章</Link>
             </li>
 
             <li>
-              <Link>我的課程</Link>
+              <Link to={`/member/course/${this.props.myId}`}>我的課程</Link>
             </li>
 
             <li>
-              <Link>商品管理</Link>
+              <Link to={`/member/product/${this.props.myId}`}>商品管理</Link>
             </li>
           </ul>
         </Col>

@@ -219,7 +219,7 @@ class edit extends React.Component {
               myId={this.state.id}
             />
 
-            <Col sm={8}>
+            <Col>
               <div className="myProfile">
                 <div className="member-title">
                   <h4 className="p-1">我的個人檔案</h4>
@@ -243,6 +243,7 @@ class edit extends React.Component {
                         value={this.state.m_name}
                         name="m_name"
                         onChange={this.handleFormInputChange}
+                        className="form-control"
                       />
                     </li>
                     <li>
@@ -282,7 +283,7 @@ class edit extends React.Component {
                         onChange={this.handleFormInputChange}
                       />
                     </li>
-                    <li>
+                    <li className="form-row">
                       地區{' '}
                       <input
                         type="text"
@@ -294,7 +295,7 @@ class edit extends React.Component {
                     <div>
                       <TWzipcode
                         css={[
-                          'form-control county-sel mb-3',
+                          'form-control county-sel  city',
                           'form-control district-sel',
                           'form-control zipcode',
                         ]}
