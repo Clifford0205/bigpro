@@ -56,6 +56,7 @@ class LoginModal extends React.Component {
       // const data = item;
 
       const response = await fetch('http://localhost:5555/login', {
+        credentials: 'include',
         method: 'POST',
         body: JSON.stringify(sendObj),
         headers: new Headers({
