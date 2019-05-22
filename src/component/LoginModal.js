@@ -75,16 +75,15 @@ class LoginModal extends React.Component {
           this.setState({ Logindb: 'block' });
           this.setState({ Logintext: '登入成功' });
           this.setState({ Loginstate: 'alert alert-success' });
-          return;
-        }
-
-        if (!jsonObject.success) {
+          this.props.saveLoginData({
+            loginUser: jsonObject.body.m_email,
+            isLogined: true,
+          });
+        } else {
           this.setState({ Logindb: 'block' });
           this.setState({ Logintext: '登入失敗' });
           this.setState({ Loginstate: 'alert alert-danger' });
           alert('帳號或密碼錯誤');
-
-          return;
         }
       });
     } catch (e) {

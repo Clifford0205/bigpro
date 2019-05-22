@@ -77,7 +77,7 @@ class edit extends React.Component {
   }
 
   upload = () => {
-    document.getElementById('selectImage').click();
+    document.getElementById('selectImage2').click();
   };
 
   handleFormInputChange = event => {
@@ -94,21 +94,21 @@ class edit extends React.Component {
     // console.log(this.newMyemberData);
   };
 
-  handlepicChange = e => {
+  handlepicChange2 = e => {
     // console.log(e.target.files[0]);
     console.log(e.target.files[0]);
-    this.fileInfo(e.target.files[0]);
+    this.fileInfo2(e.target.files[0]);
     this.setState({ new_photo: e.target.files[0] });
   };
 
-  fileInfo(theFile) {
+  fileInfo2(theFile) {
     var reader = new FileReader();
     reader.readAsDataURL(theFile);
     reader.addEventListener('loadend', function(event) {
       //console.log(event.target.result);
       //<img src="" class="" />
-      var photo = document.querySelector('.thumb2');
-      photo.setAttribute('src', event.target.result);
+      var photo2 = document.querySelector('.thumb2');
+      photo2.setAttribute('src', event.target.result);
       // console.log(event.target.result);
     });
   }
@@ -339,10 +339,10 @@ class edit extends React.Component {
                     <div>
                       <input
                         type="file"
-                        onChange={this.handlepicChange}
+                        onChange={this.handlepicChange2}
                         name="avatar"
                         className="m-auto d-none"
-                        id="selectImage"
+                        id="selectImage2"
                         ref={el => (this.input = el)}
                       />
                     </div>
