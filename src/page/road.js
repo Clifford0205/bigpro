@@ -63,11 +63,15 @@ class road extends React.Component {
   handleTitleClick = e => {
     this.setState({ nowPage: true });
     console.log(e.target.id);
+    console.log(e.target.className);
     let Allbox = document.querySelectorAll('.Allbox');
+    let AllItem = document.querySelectorAll('.nav-link');
     for (var i = 0; i < Allbox.length; i++) {
       Allbox[i].classList.remove('show');
+      AllItem[i].classList.remove('active');
     }
     document.querySelector(`.${e.target.id}`).classList.add('show');
+    document.querySelector(`#${e.target.id}`).classList.add('active');
     // e.target.classList.add('show');
   };
 

@@ -13,7 +13,14 @@ import './LoginModal.scss';
 class LoginModal extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      memberData: [],
+      m_email: '',
+      m_password: '',
+      Logindb: 'none',
+      Logintext: '註冊失敗',
+      Loginstate: 'alert alert-danger',
+    };
   }
 
   handleModalFormInputChange = event => {
@@ -23,6 +30,66 @@ class LoginModal extends React.Component {
     this.setState({ [name]: value });
 
     console.log({ [name]: value });
+  };
+
+  handleModalFormInputSave = async () => {
+    const item = {
+      m_email: this.state.m_email,
+      m_password: this.state.m_password,
+    };
+    console.log(item);
+    const newData = [item, ...this.state.memberData];
+
+    var formData = new FormData();
+
+    formData.append('m_email', this.state.m_email);
+    formData.append('m_password', this.state.m_password);
+
+    console.log(formData);
+
+    var sendObj = {
+      m_email: this.state.m_email,
+      m_password: this.state.m_password,
+    };
+
+    try {
+      // const data = item;
+
+      const response = await fetch('http://localhost:5555/login', {
+        method: 'POST',
+        body: JSON.stringify(sendObj),
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      });
+
+      const jsonObject = await response.json();
+
+      console.log(jsonObject);
+
+      await this.setState({ memberData: [newData] }, () => {
+        // this.handleModalClose();
+        if (jsonObject.success) {
+          alert('登入成功!');
+          this.setState({ Logindb: 'block' });
+          this.setState({ Logintext: '登入成功' });
+          this.setState({ Loginstate: 'alert alert-success' });
+          return;
+        }
+
+        if (!jsonObject.success) {
+          this.setState({ Logindb: 'block' });
+          this.setState({ Logintext: '登入失敗' });
+          this.setState({ Loginstate: 'alert alert-danger' });
+          alert('帳號或密碼錯誤');
+
+          return;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {
@@ -39,12 +106,12 @@ class LoginModal extends React.Component {
           <Modal.Body>
             <div
               id="info_bar"
-              className={this.state.installstate}
-              style={{ display: `${this.state.installdb}` }}
+              className={this.state.Loginstate}
+              style={{ display: `${this.state.Logindb}` }}
               role="alert"
               // style={{"display:"}}
             >
-              {this.state.installtext}
+              {this.state.Logintext}
             </div>
             <Row>
               <Col>

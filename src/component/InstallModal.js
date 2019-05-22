@@ -21,7 +21,7 @@ class InstallModal extends React.Component {
       m_email: '',
       m_password: '',
       re_password: '',
-      m_photo: '',
+      m_photo: 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png',
       installdb: 'none',
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
@@ -79,10 +79,10 @@ class InstallModal extends React.Component {
     formData.append('m_birthday', this.state.m_birthday);
     formData.append('m_email', this.state.m_email);
     formData.append('m_password', this.state.m_password);
-    formData.append('avatar', this.state.m_photo);
-    // this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
-    //   ? formData.append('m_photo', this.state.m_photo)
-    //   : formData.append('avatar', this.state.m_photo);
+    // formData.append('avatar', this.state.m_photo);
+    this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
+      ? formData.append('m_photo', this.state.m_photo)
+      : formData.append('avatar', this.state.m_photo);
     console.log(formData);
     try {
       // const data = item;

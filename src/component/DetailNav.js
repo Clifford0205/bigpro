@@ -81,19 +81,37 @@ class DetailNav extends React.Component {
             </a>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-2" onClick={this.props.handleTitleClick}>
-              <div id="box2">{this.props.title2}</div>
-            </Nav.Link>
+            <a
+              href="javascipt:;"
+              eventKey="link-2"
+              onClick={this.props.handleTitleClick}
+              className="nav-link"
+              id="box2"
+            >
+              {this.props.title2}
+            </a>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-3" onClick={this.props.handleTitleClick}>
-              <div id="box3">{this.props.title3}</div>
-            </Nav.Link>
+            <a
+              href="javascipt:;"
+              eventKey="link-3"
+              onClick={this.props.handleTitleClick}
+              className="nav-link"
+              id="box3"
+            >
+              {this.props.title3}
+            </a>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-4" onClick={this.props.handleTitleClick}>
-              <div id="box4">{this.props.title4}</div>
-            </Nav.Link>
+            <a
+              href="javascipt:;"
+              eventKey="link4"
+              onClick={this.props.handleTitleClick}
+              className="nav-link"
+              id="box4"
+            >
+              {this.props.title4}
+            </a>
           </Nav.Item>
         </Nav>
       </>

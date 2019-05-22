@@ -17,12 +17,19 @@ import road from './page/road';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loginUser: '',
+      isLogined: '',
+    };
   }
+
+  saveLoginData = () => {
+    this.setState({});
+  };
   render() {
     return (
       <>
-        <Install />
+        <Install saveLoginData={this.saveLoginData} />
 
         <Router>
           <>
