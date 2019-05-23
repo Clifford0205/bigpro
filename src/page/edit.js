@@ -247,7 +247,14 @@ class edit extends React.Component {
   };
 
   render() {
-    // if (this.state.id == this.state.ID)
+    if (
+      this.state.id != this.state.user_id &&
+      this.state.id &&
+      this.state.user_id
+    ) {
+      return <Redirect to="/" />;
+      // alert(this.state.id + ' ' + this.state.user_id);
+    }
     return (
       <>
         <Container className="member_edit">
