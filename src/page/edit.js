@@ -1,6 +1,6 @@
 import React from 'react';
 // import { data } from '../data/data';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -14,6 +14,7 @@ import {
 import Sidebar from '../component/Sidebar';
 import './edit.scss';
 import TWzipcode from 'react-twzipcode';
+import checkUserState from './../util/check';
 
 class edit extends React.Component {
   constructor(props) {
@@ -35,11 +36,49 @@ class edit extends React.Component {
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
       id: '',
+      loginUser: '',
+      isLogined: '',
+      user_id: '',
     };
     this.newMyemberData = {};
   }
 
   async componentDidMount() {
+    const jsonObject = await checkUserState();
+    console.log('jsonObject', jsonObject);
+    // p.then(jsonObject => {
+    //   console.log('2', jsonObject);
+    await this.setState({
+      loginUser: jsonObject.loginUser,
+      isLogined: jsonObject.isLogined,
+      user_id: jsonObject.user_id,
+    });
+    console.log('state', this.state);
+    // });
+    // try {
+    //   const response = await fetch('http://localhost:5555/is_logined', {
+    //     method: 'GET',
+    //     credentials: 'include',
+    //     headers: new Headers({
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //     }),
+    //   });
+
+    //   // if (!response.ok) throw new Error(response.statusText);
+
+    //   const jsonObject = await response.json();
+
+    //   console.log(jsonObject);
+    //   await this.setState({
+    //     loginUser: jsonObject.loginUser,
+    //     isLogined: jsonObject.isLogined,
+    //     Id: jsonObject.id,
+    //   });
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    // }
     try {
       let id = this.props.match.params.id;
       console.log(id);
@@ -208,6 +247,7 @@ class edit extends React.Component {
   };
 
   render() {
+    // if (this.state.id == this.state.ID)
     return (
       <>
         <Container className="member_edit">

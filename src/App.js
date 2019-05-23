@@ -27,12 +27,33 @@ import course from './page/course';
 import road from './page/road';
 import './App.scss';
 
+// function PrivateRoute({ component: Component, ...rest }) {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         fakeAuth.isAuthenticated ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: "/login",
+//               state: { from: props.location }
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// }
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loginUser: '',
       isLogined: '',
+      user_id: '',
       showModalIns: false,
       showModalLogin: false,
     };
@@ -86,12 +107,37 @@ class App extends React.Component {
       await this.setState({
         loginUser: jsonObject.loginUser,
         isLogined: jsonObject.isLogined,
+        user_id: jsonObject.user_id,
       });
     } catch (e) {
       console.log(e);
     } finally {
     }
   }
+
+  //登出
+  logOut = async () => {
+    try {
+      const response = await fetch('http://localhost:5555/logout', {
+        method: 'GET',
+        credentials: 'include',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      });
+      const jsonObject = await response.json();
+      console.log(jsonObject);
+      await this.setState({
+        loginUser: jsonObject.loginUser,
+        isLogined: jsonObject.isLogined,
+        user_id: jsonObject.user_id,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   render() {
     // console.log(this.props.routes);
     console.log(this.state);
@@ -124,28 +170,41 @@ class App extends React.Component {
               </Button>
 
               <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <span>
+                <Dropdown.Toggle
+                  variant=""
+                  id="dropdown-basic"
+                  className="d-flex personal-btn"
+                >
+                  <div className="littlePhoto">
                     <img src={this.props.src} className="originPhoto" />
+                  </div>
+                  <span className="align-middle navbar-username">
+                    愛騎單車的本地居民
                   </span>
-                  Dropdown Button
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href={`/member/edit/${this.props.myId}`}>
+                  <Dropdown.Item href={`/member/edit/${this.state.Id}`}>
                     會員資料
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/road/${this.props.myId}`}>
+                  <Dropdown.Item href={`/member/road/${this.state.Id}`}>
                     路線列表
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/news/${this.props.myId}`}>
+                  <Dropdown.Item href={`/member/news/${this.state.Id}`}>
                     收藏文章
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/course/${this.props.myId}`}>
+                  <Dropdown.Item href={`/member/course/${this.state.Id}`}>
                     我的課程
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/product/${this.props.myId}`}>
+                  <Dropdown.Item href={`/member/product/${this.state.Id}`}>
                     商品管理
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="3"
+                    onClick={this.logOut}
+                    className="logout-btn"
+                  >
+                    登出
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -156,25 +215,7 @@ class App extends React.Component {
         <Router>
           <>
             <Switch>
-              {/* {this.state.loginUser !== '' && this.state.isLogined !== '' ? (
-                <Route path="/member/edit/:id" component={edit} />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: '/',
-                  }}
-                />
-              )} */}
-              {/* <Route path="/member/edit/:id" component={edit} />
-              <Redirect
-                from={`${this.props.match.path}/story`}
-                to={{
-                  pathname: `${this.props.match.url}/his`,
-                  search: '?hey=UCCU',
-                  state: { name: 'Referrer' },
-                }} */}
-
-              {/* <Route path="/member/edit/:id" component={edit} /> */}
+              <Route path="/member/edit/:id" component={edit} />
               <Route path="/member/password/:id" component={password} />
               <Route path="/member/product/:id" component={product} />
               <Route path="/member/course/:id" component={course} />

@@ -79,6 +79,7 @@ class LoginModal extends React.Component {
           this.props.saveLoginData({
             loginUser: jsonObject.body.m_email,
             isLogined: true,
+            user_id: jsonObject.message.user_id,
           });
         } else {
           this.setState({ Logindb: 'block' });
