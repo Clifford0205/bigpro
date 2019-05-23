@@ -53,7 +53,7 @@ class edit extends React.Component {
       isLogined: jsonObject.isLogined,
       user_id: jsonObject.user_id,
     });
-    console.log('state', this.state);
+
     // });
     // try {
     //   const response = await fetch('http://localhost:5555/is_logined', {
@@ -185,7 +185,6 @@ class edit extends React.Component {
     this.state.new_photo == ''
       ? formData.append('m_photo', this.state.m_photo)
       : formData.append('avatar', this.state.new_photo);
-    console.log(formData);
 
     try {
       // const data = item;
@@ -247,168 +246,172 @@ class edit extends React.Component {
   };
 
   render() {
+    console.log('state', this.state);
+    console.log(this.state.user_id);
     if (
-      this.state.id != this.state.user_id &&
-      this.state.id &&
-      this.state.user_id
+      (this.state.id != this.state.user_id &&
+        this.state.id &&
+        this.state.user_id) ||
+      this.state.user_id == undefined
     ) {
       return <Redirect to="/" />;
       // alert(this.state.id + ' ' + this.state.user_id);
-    }
-    return (
-      <>
-        <Container className="member_edit">
-          <Row>
-            {console.log(this.state.id)}
-            <Sidebar
-              src={this.state.m_photo}
-              name={this.state.m_name}
-              myId={this.state.id}
-            />
+    } else {
+      return (
+        <>
+          <Container className="member_edit">
+            <Row>
+              {console.log(this.state.id)}
+              <Sidebar
+                src={this.state.m_photo}
+                name={this.state.m_name}
+                myId={this.state.id}
+              />
 
-            <Col>
-              <div className="myProfile">
-                <div className="member-title">
-                  <h4 className="p-1">我的個人檔案</h4>
-                </div>
+              <Col>
+                <div className="myProfile">
+                  <div className="member-title">
+                    <h4 className="p-1">我的個人檔案</h4>
+                  </div>
 
-                <div
-                  id="info_bar"
-                  className={this.state.installstate}
-                  style={{ display: `${this.state.installdb}` }}
-                  role="alert"
-                  // style={{"display:"}}
-                >
-                  {this.state.installtext}
-                </div>
-                <div className="d-flex">
-                  <ul className="list-unstyled textpart flex-grow-1">
-                    <li>
-                      姓名
-                      <input
-                        type="text"
-                        value={this.state.m_name}
-                        name="m_name"
-                        onChange={this.handleFormInputChange}
-                        className="form-control"
-                      />
-                    </li>
-                    <li>
-                      手機號碼
-                      <input
-                        type="text"
-                        value={this.state.m_mobile}
-                        name="m_mobile"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
+                  <div
+                    id="info_bar"
+                    className={this.state.installstate}
+                    style={{ display: `${this.state.installdb}` }}
+                    role="alert"
+                    // style={{"display:"}}
+                  >
+                    {this.state.installtext}
+                  </div>
+                  <div className="d-flex">
+                    <ul className="list-unstyled textpart flex-grow-1">
+                      <li>
+                        姓名
+                        <input
+                          type="text"
+                          value={this.state.m_name}
+                          name="m_name"
+                          onChange={this.handleFormInputChange}
+                          className="form-control"
+                        />
+                      </li>
+                      <li>
+                        手機號碼
+                        <input
+                          type="text"
+                          value={this.state.m_mobile}
+                          name="m_mobile"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
 
-                    <li>
-                      帳號(電子郵件){' '}
-                      <input
-                        type="text"
-                        value={this.state.m_email}
-                        name="m_email"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                    <li>
-                      生日{' '}
-                      <input
-                        type="date"
-                        value={this.state.m_birthday}
-                        name="m_birthday"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                    <li>
-                      城市{' '}
-                      <input
-                        type="text"
-                        value={this.state.m_city}
-                        name="m_city"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                    <li className="form-row">
-                      地區{' '}
-                      <input
-                        type="text"
-                        value={this.state.m_town}
-                        name="m_town"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                    <div>
-                      <TWzipcode
-                        css={[
-                          'form-control county-sel  city',
-                          'form-control district-sel',
-                          'form-control zipcode',
-                        ]}
-                        handleChangeCounty={this.handleChange}
-                        handleChangeDistrict={this.handleChange}
-                        handleChangeZipcode={this.handleChange}
-                        countyValue={this.state.m_city}
-                        districtValue={this.state.m_town}
-                      />
-                    </div>
+                      <li>
+                        帳號(電子郵件){' '}
+                        <input
+                          type="text"
+                          value={this.state.m_email}
+                          name="m_email"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                      <li>
+                        生日{' '}
+                        <input
+                          type="date"
+                          value={this.state.m_birthday}
+                          name="m_birthday"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                      <li>
+                        城市{' '}
+                        <input
+                          type="text"
+                          value={this.state.m_city}
+                          name="m_city"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                      <li className="form-row">
+                        地區{' '}
+                        <input
+                          type="text"
+                          value={this.state.m_town}
+                          name="m_town"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                      <div>
+                        <TWzipcode
+                          css={[
+                            'form-control county-sel  city',
+                            'form-control district-sel',
+                            'form-control zipcode',
+                          ]}
+                          handleChangeCounty={this.handleChange}
+                          handleChangeDistrict={this.handleChange}
+                          handleChangeZipcode={this.handleChange}
+                          countyValue={this.state.m_city}
+                          districtValue={this.state.m_town}
+                        />
+                      </div>
 
-                    <li>
-                      路段
-                      <input
-                        name=""
-                        id=""
-                        value={this.state.m_address}
-                        name="m_address"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                  </ul>
+                      <li>
+                        路段
+                        <input
+                          name=""
+                          id=""
+                          value={this.state.m_address}
+                          name="m_address"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                    </ul>
 
-                  <div className="flex-grow-1 text-center">
-                    <div className="myPhoto mx-auto">
-                      <img
-                        src={
-                          this.state.new_photo
-                            ? this.state.new_photo
-                            : this.state.m_photo
-                        }
-                        className="thumb2"
-                      />
-                    </div>
+                    <div className="flex-grow-1 text-center">
+                      <div className="myPhoto mx-auto">
+                        <img
+                          src={
+                            this.state.new_photo
+                              ? this.state.new_photo
+                              : this.state.m_photo
+                          }
+                          className="thumb2"
+                        />
+                      </div>
 
-                    <Button variant="secondary mt-5" onClick={this.upload}>
-                      上傳圖片
-                    </Button>
+                      <Button variant="secondary mt-5" onClick={this.upload}>
+                        上傳圖片
+                      </Button>
 
-                    <div className="mt-3">檔案限制: .JPEG, .PNG</div>
-                    <div>
-                      <input
-                        type="file"
-                        onChange={this.handlepicChange2}
-                        name="avatar"
-                        className="m-auto d-none"
-                        id="selectImage2"
-                        ref={el => (this.input = el)}
-                      />
+                      <div className="mt-3">檔案限制: .JPEG, .PNG</div>
+                      <div>
+                        <input
+                          type="file"
+                          onChange={this.handlepicChange2}
+                          name="avatar"
+                          className="m-auto d-none"
+                          id="selectImage2"
+                          ref={el => (this.input = el)}
+                        />
+                      </div>
                     </div>
                   </div>
+                  <div className="text-center">
+                    <Button
+                      variant="secondary m-auto"
+                      onClick={this.handleModalFormInputeditChecked}
+                    >
+                      修改資料
+                    </Button>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <Button
-                    variant="secondary m-auto"
-                    onClick={this.handleModalFormInputeditChecked}
-                  >
-                    修改資料
-                  </Button>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
+              </Col>
+            </Row>
+          </Container>
+        </>
+      );
+    }
   }
 }
 

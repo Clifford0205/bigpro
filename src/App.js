@@ -25,6 +25,7 @@ import product from './page/product';
 import news from './page/news';
 import course from './page/course';
 import road from './page/road';
+import Login from './page/Login';
 import './App.scss';
 
 // function PrivateRoute({ component: Component, ...rest }) {
@@ -162,6 +163,8 @@ class App extends React.Component {
               >
                 登入
               </Button>
+
+              <Nav.Link href="/logine">登入</Nav.Link>
               <Button
                 variant="outline-success ml-auto mr-5"
                 onClick={this.handleAddModalShowIns}
@@ -215,6 +218,7 @@ class App extends React.Component {
         <Router>
           <>
             <Switch>
+              <Route path="/login" component={Login} />
               <Route path="/member/edit/:id" component={edit} />
               <Route path="/member/password/:id" component={password} />
               <Route path="/member/product/:id" component={product} />
