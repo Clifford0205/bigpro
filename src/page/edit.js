@@ -33,7 +33,7 @@ class edit extends React.Component {
       m_photo: '',
       new_photo: '',
       installdb: 'none',
-      installtext: '註冊失敗',
+      installtext: '修改失敗',
       installstate: 'alert alert-danger',
       id: '',
       loginUser: '',
@@ -81,16 +81,21 @@ class edit extends React.Component {
     // }
     try {
       let id = this.props.match.params.id;
+      let user_id = this.state.user_id;
       console.log(id);
+      console.log(user_id);
       this.setState({ id: id });
       console.log(this.state.id);
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
-        method: 'GET',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      );
 
       // if (!response.ok) throw new Error(response.statusText);
 
@@ -302,6 +307,7 @@ class edit extends React.Component {
                           value={this.state.m_mobile}
                           name="m_mobile"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
                       </li>
 
@@ -312,6 +318,7 @@ class edit extends React.Component {
                           value={this.state.m_email}
                           name="m_email"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
                       </li>
                       <li>
@@ -321,15 +328,17 @@ class edit extends React.Component {
                           value={this.state.m_birthday}
                           name="m_birthday"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
                       </li>
-                      <li>
+                      {/* <li>
                         城市{' '}
                         <input
                           type="text"
                           value={this.state.m_city}
                           name="m_city"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
                       </li>
                       <li className="form-row">
@@ -339,14 +348,16 @@ class edit extends React.Component {
                           value={this.state.m_town}
                           name="m_town"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
-                      </li>
-                      <div>
+                      </li> */}
+                      <li>
+                        <div>請選擇地區</div>
                         <TWzipcode
                           css={[
-                            'form-control county-sel  city',
-                            'form-control district-sel',
-                            'form-control zipcode',
+                            'form-control county-sel  city d-md-inline-block TWZ w-md-auto',
+                            'form-control district-sel  d-md-inline-block TWZ ml-md-5 w-md-auto',
+                            'form-control zipcode  d-md-inline-block TWZ  ml-md-5 w-md-auto',
                           ]}
                           handleChangeCounty={this.handleChange}
                           handleChangeDistrict={this.handleChange}
@@ -354,7 +365,7 @@ class edit extends React.Component {
                           countyValue={this.state.m_city}
                           districtValue={this.state.m_town}
                         />
-                      </div>
+                      </li>
 
                       <li>
                         路段
@@ -364,6 +375,7 @@ class edit extends React.Component {
                           value={this.state.m_address}
                           name="m_address"
                           onChange={this.handleFormInputChange}
+                          className="form-control"
                         />
                       </li>
                     </ul>

@@ -12,15 +12,18 @@ import {
 // import './member.css';
 import './LoginModal.scss';
 
-class LoginModal extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       memberData: [],
       m_email: '',
       m_password: '',
+      loginUser: '',
+      isLogined: false,
+      user_id: '',
       Logindb: 'none',
-      Logintext: '註冊失敗',
+      Logintext: '登入失敗',
       Loginstate: 'alert alert-danger',
     };
   }
@@ -78,7 +81,7 @@ class LoginModal extends React.Component {
           this.setState({ Logindb: 'block' });
           this.setState({ Logintext: '登入成功' });
           this.setState({ Loginstate: 'alert alert-success' });
-          this.props.saveLoginData({
+          this.setState({
             loginUser: jsonObject.body.m_email,
             isLogined: true,
             user_id: jsonObject.message.user_id,
@@ -96,6 +99,7 @@ class LoginModal extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <Modal
@@ -176,6 +180,15 @@ class LoginModal extends React.Component {
           <Row>
             <Col>
               <Form>
+                <div
+                  id="info_bar"
+                  className={this.state.Loginstate}
+                  style={{ display: `${this.state.Logindb}` }}
+                  role="alert"
+                  // style={{"display:"}}
+                >
+                  {this.state.Logintext}
+                </div>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
@@ -186,12 +199,12 @@ class LoginModal extends React.Component {
                     onChange={this.handleModalFormInputChange}
                   />
                   <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
+                    請輸入你的電子郵件
                   </Form.Text>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>密碼</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -211,7 +224,7 @@ class LoginModal extends React.Component {
                   variant="secondary m-auto"
                   onClick={this.handleModalFormInputSave}
                 >
-                  Submit
+                  送出
                 </Button>
               </Form>
             </Col>
@@ -222,4 +235,4 @@ class LoginModal extends React.Component {
   }
 }
 
-export default LoginModal;
+export default Login;

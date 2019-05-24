@@ -1,5 +1,12 @@
+@mixin md {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 .member_edit {
   font-family: Noto Sans CJK TC;
+  padding-bottom: 5%;
 
   .myProfile {
     margin-top: 110px;
@@ -32,7 +39,22 @@
     object-fit: cover;
   }
 
-  .city::before {
-    content: '城市';
+  .TWZ {
+    width: auto;
+    @include md {
+      width: 100%;
+    }
+  }
+
+  .county-sel,
+  .district-sel,
+  .zipcode {
+    @include md {
+      margin-bottom: 20px;
+    }
+  }
+
+  .form-control {
+    border-radius: 0%;
   }
 }

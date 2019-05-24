@@ -1,6 +1,6 @@
 import React from 'react';
 // import { data } from '../data/data';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -13,6 +13,7 @@ import {
 // import PathNow from '../component/PathNow';
 import Sidebar from '../component/Sidebar';
 import './edit.scss';
+import checkUserState from './../util/check';
 
 class product extends React.Component {
   constructor(props) {
@@ -29,21 +30,40 @@ class product extends React.Component {
       installdb: 'none',
       installtext: '註冊失敗',
       installstate: 'alert alert-danger',
+      id: '',
+      loginUser: '',
+      isLogined: '',
+      user_id: '',
     };
   }
 
   async componentDidMount() {
+    const jsonObject = await checkUserState();
+    console.log('jsonObject', jsonObject);
+    // p.then(jsonObject => {
+    //   console.log('2', jsonObject);
+    await this.setState({
+      loginUser: jsonObject.loginUser,
+      isLogined: jsonObject.isLogined,
+      user_id: jsonObject.user_id,
+    });
+
     try {
       let id = this.props.match.params.id;
+      let user_id = this.state.user_id;
       console.log(id);
+      console.log(user_id);
       this.setState({ id: id });
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
-        method: 'GET',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      );
 
       // if (!response.ok) throw new Error(response.statusText);
 
@@ -77,19 +97,29 @@ class product extends React.Component {
   };
 
   render() {
-    return (
-      <>
-        <Container className="member_edit">
-          <Row>
-            <Sidebar
-              src={this.state.m_photo}
-              name={this.state.m_name}
-              myId={this.state.id}
-            />
-          </Row>
-        </Container>
-      </>
-    );
+    if (
+      (this.state.id != this.state.user_id &&
+        this.state.id &&
+        this.state.user_id) ||
+      this.state.user_id == undefined
+    ) {
+      return <Redirect to="/" />;
+      // alert(this.state.id + ' ' + this.state.user_id);
+    } else {
+      return (
+        <>
+          <Container className="member_edit">
+            <Row>
+              <Sidebar
+                src={this.state.m_photo}
+                name={this.state.m_name}
+                myId={this.state.id}
+              />
+            </Row>
+          </Container>
+        </>
+      );
+    }
   }
 }
 

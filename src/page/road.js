@@ -1,6 +1,6 @@
 import React from 'react';
 // import { data } from '../data/data';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -15,7 +15,7 @@ import {
 import Sidebar from '../component/Sidebar';
 import DetailNav from '../component/DetailNav';
 import './road.scss';
-import { NONAME } from 'dns';
+import checkUserState from './../util/check';
 
 class road extends React.Component {
   constructor(props) {
@@ -27,21 +27,40 @@ class road extends React.Component {
       NavTitle4: '所有路線',
       nowPage: false,
       dpType: 'none',
+      id: '',
+      loginUser: '',
+      isLogined: '',
+      user_id: '',
     };
   }
 
   async componentDidMount() {
+    const jsonObject = await checkUserState();
+    console.log('jsonObject', jsonObject);
+    // p.then(jsonObject => {
+    //   console.log('2', jsonObject);
+    await this.setState({
+      loginUser: jsonObject.loginUser,
+      isLogined: jsonObject.isLogined,
+      user_id: jsonObject.user_id,
+    });
+
     try {
       let id = this.props.match.params.id;
+      let user_id = this.state.user_id;
       console.log(id);
+      console.log(user_id);
       this.setState({ id: id });
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
-        method: 'GET',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      );
 
       // if (!response.ok) throw new Error(response.statusText);
 
@@ -76,41 +95,47 @@ class road extends React.Component {
   };
 
   render() {
-    // {
-    //   document.querySelectorAll('.nav-link');
-    //   console.log(document.querySelectorAll('.nav-link')[0].dataset);
-    // }
-    return (
-      <>
-        <Container className="member_road">
-          <Row>
-            <Sidebar
-              src={this.state.m_photo}
-              name={this.state.m_name}
-              myId={this.state.id}
-            />
-
-            <Col style={{ marginTop: '200px' }}>
-              <DetailNav
-                title1={this.state.NavTitle1}
-                title2={this.state.NavTitle2}
-                title3={this.state.NavTitle3}
-                title4={this.state.NavTitle4}
-                handleTitleClick={this.handleTitleClick}
+    if (
+      (this.state.id != this.state.user_id &&
+        this.state.id &&
+        this.state.user_id) ||
+      this.state.user_id == undefined
+    ) {
+      return <Redirect to="/" />;
+      // alert(this.state.id + ' ' + this.state.user_id);
+    } else {
+      return (
+        <>
+          <Container className="member_road">
+            <Row>
+              <Sidebar
+                src={this.state.m_photo}
+                name={this.state.m_name}
+                myId={this.state.id}
               />
 
-              <div className="box1 Allbox">123456</div>
+              <Col style={{ marginTop: '200px' }}>
+                <DetailNav
+                  title1={this.state.NavTitle1}
+                  title2={this.state.NavTitle2}
+                  title3={this.state.NavTitle3}
+                  title4={this.state.NavTitle4}
+                  handleTitleClick={this.handleTitleClick}
+                />
 
-              <div className="box2 Allbox">987654321</div>
+                <div className="box1 Allbox">123456</div>
 
-              <div className="box3 Allbox">872222</div>
+                <div className="box2 Allbox">987654321</div>
 
-              <div className="box4 Allbox">258768</div>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
+                <div className="box3 Allbox">872222</div>
+
+                <div className="box4 Allbox">258768</div>
+              </Col>
+            </Row>
+          </Container>
+        </>
+      );
+    }
   }
 }
 

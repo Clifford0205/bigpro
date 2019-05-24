@@ -55,8 +55,9 @@ class App extends React.Component {
       loginUser: '',
       isLogined: '',
       user_id: '',
+      session_name: '',
+      session_photo: '',
       showModalIns: false,
-      showModalLogin: false,
     };
   }
 
@@ -109,6 +110,8 @@ class App extends React.Component {
         loginUser: jsonObject.loginUser,
         isLogined: jsonObject.isLogined,
         user_id: jsonObject.user_id,
+        session_name: jsonObject.session_name,
+        session_photo: jsonObject.session_photo,
       });
     } catch (e) {
       console.log(e);
@@ -144,11 +147,6 @@ class App extends React.Component {
     console.log(this.state);
     return (
       <div className="myMember-App">
-        <LoginModal
-          show={this.state.showModalLogin}
-          close={this.handleModalCloseLogin}
-          saveLoginData={this.saveLoginData}
-        />
         <InstallModal
           show={this.state.showModalIns}
           close={this.handleModalCloseIns}
@@ -157,49 +155,65 @@ class App extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Form inline className="ml-auto">
-              <Button
-                variant="outline-success ml-auto mr-5"
-                onClick={this.handleAddModalShowLog}
+              <Nav.Link
+                href="/login"
+                className={
+                  this.state.user_id == '' || this.state.user_id == undefined
+                    ? 'd-block'
+                    : 'd-none'
+                }
               >
                 登入
-              </Button>
-
-              <Nav.Link href="/logine">登入</Nav.Link>
+              </Nav.Link>
               <Button
                 variant="outline-success ml-auto mr-5"
                 onClick={this.handleAddModalShowIns}
+                className={
+                  this.state.user_id == '' || this.state.user_id == undefined
+                    ? 'd-block'
+                    : 'd-none'
+                }
               >
                 註冊
               </Button>
 
-              <Dropdown>
+              <Dropdown
+                className={
+                  this.state.user_id == '' || this.state.user_id == undefined
+                    ? 'd-none'
+                    : 'd-block'
+                }
+              >
                 <Dropdown.Toggle
                   variant=""
                   id="dropdown-basic"
                   className="d-flex personal-btn"
                 >
                   <div className="littlePhoto">
-                    <img src={this.props.src} className="originPhoto" />
+                    <img
+                      src={this.state.session_photo}
+                      className="mylittlePhoto"
+                    />
                   </div>
                   <span className="align-middle navbar-username">
-                    愛騎單車的本地居民
+                    {this.state.session_name}
                   </span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href={`/member/edit/${this.state.Id}`}>
+                  <Dropdown.Item href={`/member/edit/${this.state.user_id}`}>
                     會員資料
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/road/${this.state.Id}`}>
+                  <Dropdown.Item href={`/member/road/${this.state.user_id}`}>
                     路線列表
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/news/${this.state.Id}`}>
+                  <Dropdown.Item href={`/member/news/${this.state.user_id}`}>
                     收藏文章
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/course/${this.state.Id}`}>
+                  <Dropdown.Item href={`/member/course/${this.state.user_id}`}>
                     我的課程
                   </Dropdown.Item>
-                  <Dropdown.Item href={`/member/product/${this.state.Id}`}>
+                  <Dropdown.Item href={`/member/product/${this.state.user_id}`}>
                     商品管理
                   </Dropdown.Item>
                   <Dropdown.Item

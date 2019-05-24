@@ -1,6 +1,6 @@
 import React from 'react';
 // import { data } from '../data/data';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -13,6 +13,7 @@ import {
 // import PathNow from '../component/PathNow';
 import Sidebar from '../component/Sidebar';
 import './edit.scss';
+import checkUserState from './../util/check';
 
 class password extends React.Component {
   constructor(props) {
@@ -27,23 +28,42 @@ class password extends React.Component {
       new_password: '',
       new_password2: '',
       installdb: 'none',
-      installtext: '註冊失敗',
+      installtext: '更改失敗',
       installstate: 'alert alert-danger',
+      id: '',
+      loginUser: '',
+      isLogined: '',
+      user_id: '',
     };
   }
 
   async componentDidMount() {
+    const jsonObject = await checkUserState();
+    console.log('jsonObject', jsonObject);
+    // p.then(jsonObject => {
+    //   console.log('2', jsonObject);
+    await this.setState({
+      loginUser: jsonObject.loginUser,
+      isLogined: jsonObject.isLogined,
+      user_id: jsonObject.user_id,
+    });
+
     try {
       let id = this.props.match.params.id;
+      let user_id = this.state.user_id;
       console.log(id);
+      console.log(user_id);
       this.setState({ id: id });
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
-        method: 'GET',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      );
 
       // if (!response.ok) throw new Error(response.statusText);
 
@@ -161,77 +181,87 @@ class password extends React.Component {
   };
 
   render() {
-    return (
-      <>
-        <Container className="member_edit">
-          <Row>
-            <Sidebar
-              src={this.state.m_photo}
-              name={this.state.m_name}
-              myId={this.state.id}
-            />
+    if (
+      (this.state.id != this.state.user_id &&
+        this.state.id &&
+        this.state.user_id) ||
+      this.state.user_id == undefined
+    ) {
+      return <Redirect to="/" />;
+      // alert(this.state.id + ' ' + this.state.user_id);
+    } else {
+      return (
+        <>
+          <Container className="member_edit">
+            <Row>
+              <Sidebar
+                src={this.state.m_photo}
+                name={this.state.m_name}
+                myId={this.state.id}
+              />
 
-            <Col>
-              <div className="myProfile">
-                <div className="member-title">
-                  <h4 className="p-1">更改密碼</h4>
-                </div>
+              <Col>
+                <div className="myProfile">
+                  <div className="member-title">
+                    <h4 className="p-1">更改密碼</h4>
+                  </div>
 
-                <div
-                  id="info_bar"
-                  className={this.state.installstate}
-                  style={{ display: `${this.state.installdb}` }}
-                  role="alert"
-                  // style={{"display:"}}
-                >
-                  {this.state.installtext}
-                </div>
-                <div className="d-flex">
-                  <ul className="list-unstyled textpart flex-grow-1">
-                    <li>
-                      目前密碼
-                      <input
-                        type="text"
-                        value={this.state.checkOld_password}
-                        name="checkOld_password"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                    <li>
-                      新密碼
-                      <input
-                        type="text"
-                        value={this.state.new_password}
-                        name="new_password"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-
-                    <li>
-                      確認密碼
-                      <input
-                        type="text"
-                        value={this.state.new_password2}
-                        name="new_password2"
-                        onChange={this.handleFormInputChange}
-                      />
-                    </li>
-                  </ul>
-                </div>
-                <div className="text-center">
-                  <Button
-                    variant="secondary m-auto"
-                    onClick={this.handleModalFormInputeditChecked}
+                  <div
+                    id="info_bar"
+                    className={this.state.installstate}
+                    style={{ display: `${this.state.installdb}` }}
+                    role="alert"
+                    // style={{"display:"}}
                   >
-                    修改資料
-                  </Button>
+                    {this.state.installtext}
+                  </div>
+                  <div className="d-flex">
+                    <ul className="list-unstyled textpart flex-grow-1">
+                      <li>
+                        目前密碼
+                        <input
+                          type="text"
+                          value={this.state.checkOld_password}
+                          name="checkOld_password"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                      <li>
+                        新密碼
+                        <input
+                          type="text"
+                          value={this.state.new_password}
+                          name="new_password"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+
+                      <li>
+                        確認密碼
+                        <input
+                          type="text"
+                          value={this.state.new_password2}
+                          name="new_password2"
+                          onChange={this.handleFormInputChange}
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="text-center">
+                    <Button
+                      variant="secondary m-auto"
+                      onClick={this.handleModalFormInputeditChecked}
+                    >
+                      修改資料
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
+              </Col>
+            </Row>
+          </Container>
+        </>
+      );
+    }
   }
 }
 
