@@ -86,6 +86,7 @@ class Login extends React.Component {
             isLogined: true,
             user_id: jsonObject.message.user_id,
           });
+          document.location.href = '/';
         } else {
           this.setState({ Logindb: 'block' });
           this.setState({ Logintext: '登入失敗' });
@@ -102,80 +103,6 @@ class Login extends React.Component {
     console.log(this.state);
     return (
       <>
-        <Modal
-          show={this.props.show}
-          onHide={this.props.close}
-          className="member_Login"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title className="mx-auto">會員登入</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div
-              id="info_bar"
-              className={this.state.Loginstate}
-              style={{ display: `${this.state.Logindb}` }}
-              role="alert"
-              // style={{"display:"}}
-            >
-              {this.state.Logintext}
-            </div>
-            <Row>
-              <Col>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      E-mail(帳號)
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    name="m_email"
-                    value={this.state.email}
-                    onChange={this.handleModalFormInputChange}
-                  />
-                </InputGroup>
-                <br />
-
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                      密碼
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    name="m_password"
-                    type="password"
-                    value={this.state.password}
-                    onChange={this.handleModalFormInputChange}
-                  />
-                </InputGroup>
-                <br />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col className="d-flex">
-                <div className="m-auto">
-                  <span>
-                    <a href="">忘記密碼</a>
-                  </span>
-                </div>
-              </Col>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary m-auto" onClick={this.props.close}>
-              取消
-            </Button>
-
-            <Button
-              variant="secondary m-auto"
-              onClick={this.handleModalFormInputSave}
-            >
-              登入
-            </Button>
-          </Modal.Footer>
-        </Modal>
         <Container>
           <Row>
             <Col>

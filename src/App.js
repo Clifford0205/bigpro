@@ -137,6 +137,7 @@ class App extends React.Component {
         isLogined: jsonObject.isLogined,
         user_id: jsonObject.user_id,
       });
+      document.location.href = '/';
     } catch (e) {
       console.log(e);
     }
