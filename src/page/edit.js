@@ -87,7 +87,7 @@ class edit extends React.Component {
       this.setState({ id: id });
       console.log(this.state.id);
       const response = await fetch(
-        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        `http://localhost:5000/member/${user_id ? user_id : id}`,
         {
           method: 'GET',
           headers: new Headers({
@@ -195,7 +195,7 @@ class edit extends React.Component {
       // const data = item;
       let id = this.props.match.params.id;
       console.log(id);
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
+      const response = await fetch(`http://localhost:5000/member/${id}`, {
         method: 'PUT',
         body: formData,
         // headers: new Headers({

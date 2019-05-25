@@ -1,6 +1,6 @@
 async function checkUserState() {
   try {
-    const response = await fetch('http://localhost:5555/is_logined', {
+    const response = await fetch('http://localhost:5000/is_logined', {
       method: 'GET',
       credentials: 'include',
       headers: new Headers({

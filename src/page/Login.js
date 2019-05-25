@@ -10,7 +10,7 @@ import {
   Col,
 } from 'react-bootstrap';
 // import './member.css';
-import './LoginModal.scss';
+import './Login.scss';
 
 class Login extends React.Component {
   constructor() {
@@ -57,10 +57,18 @@ class Login extends React.Component {
       m_password: this.state.m_password,
     };
 
+    if (
+      document.querySelector('#m_email').value == '' ||
+      document.querySelector('#m_password').value == ''
+    ) {
+      alert('不可空白');
+      return;
+    }
+
     try {
       // const data = item;
 
-      const response = await fetch('http://localhost:5555/login', {
+      const response = await fetch('http://localhost:5000/login', {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(sendObj),
@@ -102,11 +110,12 @@ class Login extends React.Component {
   render() {
     console.log(this.state);
     return (
-      <>
+      <div className="member_login">
         <Container>
           <Row>
             <Col>
               <Form>
+                <h2 className="text-center">登入</h2>
                 <div
                   id="info_bar"
                   className={this.state.Loginstate}
@@ -116,48 +125,57 @@ class Login extends React.Component {
                 >
                   {this.state.Logintext}
                 </div>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    name="m_email"
-                    value={this.state.email}
-                    onChange={this.handleModalFormInputChange}
-                  />
-                  <Form.Text className="text-muted">
-                    請輸入你的電子郵件
-                  </Form.Text>
-                </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>密碼</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    name="m_password"
-                    value={this.state.password}
-                    onChange={this.handleModalFormInputChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formBasicChecbox">
-                  <div className="m-auto">
-                    <span>
-                      <a href="">忘記密碼</a>
-                    </span>
-                  </div>
-                </Form.Group>
-                <Button
-                  variant="secondary m-auto"
-                  onClick={this.handleModalFormInputSave}
-                >
-                  送出
-                </Button>
+                <Row>
+                  <Col md={3} />
+                  <Col md={6}>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Label>帳號(電子郵件)</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="Enter email"
+                        id="m_email"
+                        name="m_email"
+                        value={this.state.email}
+                        onChange={this.handleModalFormInputChange}
+                      />
+                      <Form.Text className="text-muted">
+                        請輸入你的電子郵件
+                      </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                      <Form.Label>密碼</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        name="m_password"
+                        id="m_password"
+                        value={this.state.password}
+                        onChange={this.handleModalFormInputChange}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicChecbox">
+                      <div className="m-auto">
+                        <span>
+                          <a href="">忘記密碼</a>
+                        </span>
+                      </div>
+                    </Form.Group>
+                    <Button
+                      variant="secondary m-auto d-block"
+                      onClick={this.handleModalFormInputSave}
+                    >
+                      送出
+                    </Button>
+                  </Col>
+                  <Col md={3} />
+                </Row>
               </Form>
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }

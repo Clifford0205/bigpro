@@ -39,7 +39,7 @@ class news extends React.Component {
       console.log(user_id);
       this.setState({ id: id });
       const response = await fetch(
-        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        `http://localhost:5000/member/${user_id ? user_id : id}`,
         {
           method: 'GET',
           headers: new Headers({

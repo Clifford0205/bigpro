@@ -52,7 +52,7 @@ class road extends React.Component {
       console.log(user_id);
       this.setState({ id: id });
       const response = await fetch(
-        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        `http://localhost:5000/member/${user_id ? user_id : id}`,
         {
           method: 'GET',
           headers: new Headers({
@@ -87,6 +87,8 @@ class road extends React.Component {
     let AllItem = document.querySelectorAll('.nav-link');
     for (var i = 0; i < Allbox.length; i++) {
       Allbox[i].classList.remove('show');
+    }
+    for (var i = 0; i < AllItem.length; i++) {
       AllItem[i].classList.remove('active');
     }
     document.querySelector(`.${e.target.id}`).classList.add('show');

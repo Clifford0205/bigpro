@@ -105,7 +105,7 @@ class DetailNav extends React.Component {
           <Nav.Item>
             <a
               href="javascipt:;"
-              eventKey="link4"
+              eventKey="link-4"
               onClick={this.props.handleTitleClick}
               className="nav-link"
               id="box4"

@@ -73,53 +73,90 @@ class InstallModal extends React.Component {
     console.log(item);
     const newData = [item, ...this.state.memberData];
 
-    var formData = new FormData();
-    formData.append('m_name', this.state.m_name);
-    formData.append('m_mobile', this.state.m_mobile);
-    formData.append('m_birthday', this.state.m_birthday);
-    formData.append('m_email', this.state.m_email);
-    formData.append('m_password', this.state.m_password);
-    // formData.append('avatar', this.state.m_photo);
-    this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
-      ? formData.append('m_photo', this.state.m_photo)
-      : formData.append('avatar', this.state.m_photo);
-    console.log(formData);
-    try {
-      // const data = item;
+    let isPassed = true;
 
-      const response = await fetch('http://localhost:5555/member', {
-        method: 'POST',
-        body: formData,
-        // headers: new Headers({
-        //   Accept: 'application/json',
-        //   'Content-Type': 'application/json',
-        // }),
-      });
+    //手機號碼驗證
+    let mobile_pattern = /^09\d{2}\-?\d{3}\-?\d{3}$/;
+    console.log(document.querySelector('#m_mobile').value);
+    if (!mobile_pattern.test(document.querySelector('#m_mobile').value)) {
+      document.querySelector('#m_mobile').style.borderColor = 'red';
+      document.querySelector('#m_mobileHelp').innerHTML =
+        '請填寫正確的手機號碼!';
+      isPassed = false;
+    }
 
-      const jsonObject = await response.json();
+    //Email驗證
+    let email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (!email_pattern.test(document.querySelector('#m_email').value)) {
+      document.querySelector('#m_email').style.borderColor = 'red';
+      document.querySelector('#m_emailHelp').innerHTML = '請填寫正確的E-mail!';
+      isPassed = false;
+    }
 
-      console.log(jsonObject);
+    //密碼驗證
+    if (
+      document.querySelector('#m_password').value !==
+      document.querySelector('#re_password').value
+    ) {
+      document.querySelector('#m_password').style.borderColor = 'red';
+      document.querySelector('#m_passwordHelp').innerHTML =
+        '兩次密碼輸入不一致!';
+      document.querySelector('#re_password').style.borderColor = 'red';
+      document.querySelector('#re_passwordHelp').innerHTML =
+        '兩次密碼輸入不一致!';
+      isPassed = false;
+    }
+    console.log(isPassed);
 
-      await this.setState({ memberData: newData }, () => {
-        // alert('資料已成功新增!');
-        // this.handleModalClose();
-        if (jsonObject.success) {
-          alert('註冊成功!');
-          this.setState({ installdb: 'block' });
-          this.setState({ installtext: '註冊成功' });
-          this.setState({ installstate: 'alert alert-success' });
-          return;
-        }
+    if (isPassed) {
+      var formData = new FormData();
+      formData.append('m_name', this.state.m_name);
+      formData.append('m_mobile', this.state.m_mobile);
+      formData.append('m_birthday', this.state.m_birthday);
+      formData.append('m_email', this.state.m_email);
+      formData.append('m_password', this.state.m_password);
+      // formData.append('avatar', this.state.m_photo);
+      this.state.m_photo == 'https://images2.imgbox.com/b0/c3/sQxunS2i_o.png'
+        ? formData.append('m_photo', this.state.m_photo)
+        : formData.append('avatar', this.state.m_photo);
+      console.log(formData);
+      try {
+        // const data = item;
 
-        if (!jsonObject.success) {
-          this.setState({ installdb: 'block' });
-          alert('e-mail重複使用');
+        const response = await fetch('http://localhost:5000/member', {
+          method: 'POST',
+          body: formData,
+          // headers: new Headers({
+          //   Accept: 'application/json',
+          //   'Content-Type': 'application/json',
+          // }),
+        });
 
-          return;
-        }
-      });
-    } catch (e) {
-      console.log(e);
+        const jsonObject = await response.json();
+
+        console.log(jsonObject);
+
+        await this.setState({ memberData: newData }, () => {
+          // alert('資料已成功新增!');
+          // this.handleModalClose();
+          if (jsonObject.success) {
+            alert('註冊成功!');
+            this.setState({ installdb: 'block' });
+            this.setState({ installtext: '註冊成功' });
+            this.setState({ installstate: 'alert alert-success' });
+            return;
+          }
+
+          if (!jsonObject.success) {
+            this.setState({ installdb: 'block' });
+            alert('e-mail重複使用');
+
+            return;
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -140,7 +177,6 @@ class InstallModal extends React.Component {
               className={this.state.installstate}
               style={{ display: `${this.state.installdb}` }}
               role="alert"
-              // style={{"display:"}}
             >
               {this.state.installtext}
             </div>
@@ -159,9 +195,11 @@ class InstallModal extends React.Component {
 
                 <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>手機號碼:</InputGroup.Prepend>
+                  <small id="m_mobileHelp" class="form-text text-muted" />
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_mobile"
+                    id="m_mobile"
                     type="number"
                     value={this.state.phone}
                     onChange={this.handleModalFormInputChange}
@@ -181,9 +219,11 @@ class InstallModal extends React.Component {
 
                 <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>E-mail(帳號):</InputGroup.Prepend>
+                  <small id="m_emailHelp" class="form-text text-muted" />
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_email"
+                    id="m_email"
                     value={this.state.email}
                     onChange={this.handleModalFormInputChange}
                   />
@@ -192,9 +232,11 @@ class InstallModal extends React.Component {
               <Col md={4}>
                 <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>密碼:</InputGroup.Prepend>
+                  <small id="m_passwordHelp" class="form-text text-muted" />
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="m_password"
+                    id="m_password"
                     type="password"
                     value={this.state.password}
                     onChange={this.handleModalFormInputChange}
@@ -203,9 +245,11 @@ class InstallModal extends React.Component {
 
                 <InputGroup className="mb-md-3">
                   <InputGroup.Prepend>確認密碼:</InputGroup.Prepend>
+                  <small id="re_passwordHelp" class="form-text text-muted" />
                   <div>&nbsp;&nbsp;&nbsp;</div>
                   <FormControl
                     name="re_password"
+                    id="re_password"
                     type="password"
                     value={this.state.re_password}
                     onChange={this.handleModalFormInputChange}

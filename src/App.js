@@ -92,7 +92,7 @@ class App extends React.Component {
   //查看是否登入
   async componentDidMount() {
     try {
-      const response = await fetch('http://localhost:5555/is_logined', {
+      const response = await fetch('http://localhost:5000/is_logined', {
         method: 'GET',
         credentials: 'include',
         headers: new Headers({
@@ -122,7 +122,7 @@ class App extends React.Component {
   //登出
   logOut = async () => {
     try {
-      const response = await fetch('http://localhost:5555/logout', {
+      const response = await fetch('http://localhost:5000/logout', {
         method: 'GET',
         credentials: 'include',
         headers: new Headers({

@@ -55,7 +55,7 @@ class password extends React.Component {
       console.log(user_id);
       this.setState({ id: id });
       const response = await fetch(
-        `http://localhost:5555/member/${user_id ? user_id : id}`,
+        `http://localhost:5000/member/${user_id ? user_id : id}`,
         {
           method: 'GET',
           headers: new Headers({
@@ -138,7 +138,7 @@ class password extends React.Component {
       // const data = item;
       let id = this.props.match.params.id;
       console.log(id);
-      const response = await fetch(`http://localhost:5555/member/${id}`, {
+      const response = await fetch(`http://localhost:5000/member/${id}`, {
         method: 'PUT',
         body: formData,
         // headers: new Headers({
@@ -209,6 +209,7 @@ class password extends React.Component {
                   <div
                     id="info_bar"
                     className={this.state.installstate}
+                    
                     style={{ display: `${this.state.installdb}` }}
                     role="alert"
                     // style={{"display:"}}
